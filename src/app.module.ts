@@ -33,6 +33,15 @@ import * as path from 'path';
             }
           : { rejectUnauthorized: false };
 
+        if (configService.get<string>('NODE_ENV') === 'development') {
+          return {
+            type: 'postgres',
+            url: configService.get<string>('DATABASE_URL'),
+            autoLoadEntities: true,
+            synchronize: true,
+          };
+        }
+
         return {
           type: 'postgres',
           url: configService.get<string>('DATABASE_URL'),
