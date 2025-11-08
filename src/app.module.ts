@@ -29,7 +29,7 @@ import * as path from 'path';
         const sslConfig = sslCaPath
           ? {
               rejectUnauthorized: false,
-              ca: fs.readFileSync(path.resolve(sslCaPath), 'utf8'),
+              //ca: fs.readFileSync(path.resolve(sslCaPath), 'utf8'),
             }
           : { rejectUnauthorized: false };
 
