@@ -1,6 +1,6 @@
 services:
   api:
-    image: cyd/concert-app-api:development
+    image: cyd/concert-app-api:latest
     restart: unless-stopped
     env_file: .env
     environment:
