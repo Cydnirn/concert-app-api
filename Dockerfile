@@ -1,13 +1,27 @@
-FROM node:22 AS development
+FROM node:22 AS build
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-COPY . .
-
 RUN npm install
 
+COPY . .
+
 RUN npm run build
+
+FROM node:22-alpine AS development
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+# Only copy the built artifacts from the build stage
+COPY --from=build /usr/src/app/dist ./dist
 
 CMD ["npm", "run", "start"]
