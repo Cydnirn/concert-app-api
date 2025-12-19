@@ -9,6 +9,7 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyCors from '@fastify/cors';
 import { setup } from './setup';
+import { SeederService } from './database/seeder.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -36,6 +37,10 @@ async function bootstrap() {
   });
 
   setup(app);
+
+  // Run database seeding
+  const seeder = app.get(SeederService);
+  await seeder.seed();
 
   await app.listen(3000, '0.0.0.0');
 }

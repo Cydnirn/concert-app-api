@@ -9,8 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ImagesModule } from './images/images.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import * as fs from 'fs';
-import * as path from 'path';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -56,6 +55,7 @@ import * as path from 'path';
     ImagesModule,
     AuthModule,
     UsersModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
