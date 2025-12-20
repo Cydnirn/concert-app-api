@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -28,15 +30,16 @@ import { DatabaseModule } from './database/database.module';
         const sslConfig = sslCaPath
           ? {
               rejectUnauthorized: false,
-              //ca: fs.readFileSync(path.resolve(sslCaPath), 'utf8'),
+              ca: fs.readFileSync(path.resolve(sslCaPath)).toString(),
             }
           : { rejectUnauthorized: false };
-
+        console.log('SSL Config:', sslConfig);
         if (configService.get<string>('NODE_ENV') === 'development') {
           return {
             type: 'postgres',
             url: configService.get<string>('DATABASE_URL'),
             autoLoadEntities: true,
+            logging: true,
             synchronize: true,
           };
         }
@@ -45,10 +48,9 @@ import { DatabaseModule } from './database/database.module';
           type: 'postgres',
           url: configService.get<string>('DATABASE_URL'),
           autoLoadEntities: true,
+          logging: true,
           synchronize: true,
-          extra: {
-            ssl: sslConfig,
-          },
+          ssl: sslConfig,
         };
       },
     }),

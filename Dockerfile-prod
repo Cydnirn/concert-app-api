@@ -20,10 +20,17 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN mkdir -p certs
 COPY certs ./certs
+ENV NODE_EXTRA_CA_CERTS=/usr/src/app/certs/us-east-1-bundle.pem
 
 RUN npm install --only=production
 
 # Only copy the built artifacts from the build stage
 COPY --from=build /usr/src/app/dist ./dist
+
+# Create a new user and set ownership
+RUN adduser -D concert-worker && \
+    chown -R concert-worker:concert-worker /usr/src/app
+
+USER concert-worker
 
 CMD ["npm", "run", "start:prod"]
