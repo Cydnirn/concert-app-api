@@ -15,7 +15,6 @@ import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    ConcertModule,
     ConfigModule.forRoot({
       envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,
       load: [configuration],
@@ -54,6 +53,7 @@ import { DatabaseModule } from './database/database.module';
         };
       },
     }),
+    ConcertModule,
     ImagesModule,
     AuthModule,
     UsersModule,
