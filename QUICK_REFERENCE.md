@@ -9,7 +9,7 @@ npm run start:dev
 
 The database will be automatically seeded with:
 - Admin user: `admin@example.com` / `admin123`
-- 10 concert tickets at $10 each
+- a concert
 
 ### 2. Login
 ```bash
@@ -154,3 +154,6 @@ Get new accessToken → Continue
 - Email: `admin@example.com`
 - Password: `admin123`
 - Role: `admin`
+
+## Note
+If using RDS database, ensure to download the CA certificate into a `./certs` directory and change the Dockerfile to use the certificate.
